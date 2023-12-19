@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
@@ -38,7 +38,7 @@
           <li class="nav-item"><a class="nav-link" th:href="@{/gallery}">Gallery</a></li>
           <li class="nav-item active"><a class="nav-link" th:href="@{/elements}">Elements</a></li>
           <li class="nav-item"><a class="nav-link" th:href="@{/contact}">Contact</a></li>
-          <li class="nav-item active"><a class="nav-link" th:href="@{/login}">Login</a></li>
+          <li class="nav-item"><a class="nav-link" th:href="@{/cutomerLogin}">Login</a></li>
         </ul>
       </div>
     </nav>
@@ -51,10 +51,10 @@
   <div class="overlay bg-parallax" data-stellar-ratio="0.8" data-stellar-vertical-offset="0" data-background=""></div>
   <div class="container">
     <div class="page-cover text-center">
-      <h2 class="page-cover-tittle f_48">Login</h2>
+      <h2 class="page-cover-tittle f_48">Registration</h2>
       <ol class="breadcrumb">
         <li><a th:href="@{/index}">Home</a></li>
-        <li class="active" >Login</li>
+        <li class="active" >Registration</li>
       </ol>
     </div>
 
@@ -62,22 +62,27 @@
       <div class="row">
         <div class="col-lg-8 col-md-8">
           <h3 class="mb-30 title_color">Login</h3>
-          <form th:action="@{/registration}" method="post" th:object="user">
+          <form th:action="@{/newCustomer}" method="post" th:object="${customer}" onsubmit="return validateForm()">
             <div class="mt-10">
-              <input type="fname" name="fname" placeholder="Firstname" th:field="*fname" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Firstname'" required class="single-input">
+              <input type="text" name="nId" placeholder="nId" th:field="*{nId}"  required >
             </div>
             <div class="mt-10">
-              <input type="lname" name="lname" placeholder="Lastname" th:field="*lname" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Lastname'" required class="single-input">
+              <input type="text" name="names" placeholder="names" th:field="*{names}"  required >
             </div>
             <div class="mt-10">
-              <input type="email" name="email" placeholder="Email" th:field="*email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email'" required class="single-input">
+              <input type="email" name="email" placeholder="Email" th:field="*{email}" required >
             </div>
             <div class="mt-10">
-              <input type="password" name="password" placeholder="Password" th:field="*password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'" required class="single-input">
+              <input type="tel" name="tell" placeholder="Phone" th:field="*{phone}" required >
             </div>
-
-            <a th:href="@{/registration}" class="genric-btn success radius" style="margin-top: 10px;">Register</a>
-            <p>Want to login? <a th:href="@{/login}"></a></p>
+            <div class="mt-10">
+              <input type="password" name="password" placeholder="Password" th:field="*{password}" required >
+            </div>
+            <div class="mt-10">
+              <input type="password" name="confirmPassword" placeholder="Confirm Password" required >
+            </div>
+            <input type="submit" class="button btn-success">
+            <p>Want to login? <a th:href="@{/login}">Login</a></p>
           </form>
         </div>
       </div>
@@ -109,7 +114,7 @@
                 <li><a href="#">Home</a></li>
                 <li><a href="#">Feature</a></li>
                 <li><a href="#">Services</a></li>
-                <li><a href="#">Portfolio</a></li>
+                <li><a th:href="@{/login}">Admin</a></li>
               </ul>
             </div>
             <div class="col-4">
@@ -169,20 +174,49 @@
   </div>
 </footer>
 <!--================ End footer Area  =================-->
+<script>
+  function validateForm() {
+    // Get values from the form
+    var nId = document.forms[0]["nId"].value;
+    var phone = document.forms[0]["tell"].value;
+    var password = document.forms[0]["password"].value;
+    var confirmPassword = document.forms[0]["confirmPassword"].value;
 
+    // Validate National ID (nId) length and format
+    if (!/^\d{16}$/.test(nId)) {
+      alert("National ID must be 16 digits.");
+      return false;
+    }
 
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="js/jquery-3.2.1.min.js"></script>
-<script src="js/popper.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="vendors/owl-carousel/owl.carousel.min.js"></script>
-<script src="js/jquery.ajaxchimp.min.js"></script>
-<script src="vendors/bootstrap-datepicker/bootstrap-datetimepicker.min.js"></script>
-<script src="vendors/nice-select/js/jquery.nice-select.js"></script>
-<script src="js/mail-script.js"></script>
-<script src="js/stellar.js"></script>
-<script src="vendors/lightbox/simpleLightbox.min.js"></script>
-<script src="js/custom.js"></script>
+    // Validate Phone Number (tell) format
+    if (!/^(07[278]\d{8})$/.test(phone)) {
+      alert("Phone number must start with 072, 073, or 078 and must be 10 digits.");
+      return false;
+    }
+
+    // Validate Password Confirmation
+    if (password !== confirmPassword) {
+      alert("Password and Confirm Password must match.");
+      return false;
+    }
+
+    // Form is valid, continue with submission
+    return true;
+  }
+</script>
+<!--&lt;!&ndash; Optional JavaScript &ndash;&gt;-->
+<!--&lt;!&ndash; jQuery first, then Popper.js, then Bootstrap JS &ndash;&gt;-->
+<!--<script src="js/jquery-3.2.1.min.js"></script>-->
+<!--<script src="js/popper.js"></script>-->
+<!--<script src="js/bootstrap.min.js"></script>-->
+<!--<script src="vendors/owl-carousel/owl.carousel.min.js"></script>-->
+<!--<script src="js/jquery.ajaxchimp.min.js"></script>-->
+<!--<script src="vendors/bootstrap-datepicker/bootstrap-datetimepicker.min.js"></script>-->
+<!--<script src="vendors/nice-select/js/jquery.nice-select.js"></script>-->
+<!--<script src="js/mail-script.js"></script>-->
+<!--<script src="js/stellar.js"></script>-->
+<!--<script src="vendors/lightbox/simpleLightbox.min.js"></script>-->
+<!--<script src="js/custom.js"></script>-->
+
 </body>
 </html>

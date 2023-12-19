@@ -14,7 +14,7 @@ public class ClientImplementation implements ClientService {
 
     @Override
     public Client findClientById(Integer cId) {
-        return null;
+        return clientRepository.findById(cId).get();
     }
 
     @Override

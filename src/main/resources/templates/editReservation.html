@@ -91,6 +91,13 @@
                     <label for="child" class="form-label">Number of Children</label>
                     <input type="text" class="form-control" id="child" name="child" th:field="*{child}" required>
                 </div>
+                <div class="mb-3">
+                    <input type="hidden" th:field="*{room.roomId}">
+<!--                    <label for="room" class="form-label">Room</label>-->
+<!--                    <select class="form-select" id="room" name="room" th:field="*{room}" required="required">-->
+<!--                        <option th:each="room : ${rooms}" th:value="${room.roomId}" th:text="${room.roomId}"></option>-->
+<!--                    </select>-->
+                </div>
 <!--                <div class="mb-3">-->
 <!--                    <label for="room" class="form-label">Room</label>-->
 <!--                    <select class="form-select" id="room" name="room" th:field="*{room}" required="required">-->
@@ -131,7 +138,7 @@
                                 <li><a href="#">Home</a></li>
                                 <li><a href="#">Feature</a></li>
                                 <li><a href="#">Services</a></li>
-                                <li><a href="#">Portfolio</a></li>
+                                <li><a th:href="@{/login}">Admin</a></li>
                             </ul>
                         </div>
                         <div class="col-4">

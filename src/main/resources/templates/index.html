@@ -40,7 +40,7 @@
                     <li class="nav-item"><a class="nav-link" th:href="@{/elements}">Elements</a></li>
                     <li class="nav-item"><a class="nav-link" th:href="@{/contact}">Contact</a></li>
 
-                    <li class="nav-item"><a class="nav-link" th:href="@{/login}">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/cutomerLogin}">Login</a></li>
                 </ul>
             </div>
         </nav>
@@ -120,7 +120,7 @@
                                             <option value="3">Room 03</option>
                                         </select>
                                     </div>
-                                    <a class="book_now_btn button_hover" href="#">Book Now</a>
+                                    <a class="book_now_btn button_hover" th:href="@{/registration}">Book Now</a>
                                 </div>
                             </div>
                         </div>
@@ -277,6 +277,7 @@
                             <ul class="list_style">
                                 <li><a th:href="@{/index}">Home</a></li>
                                 <li><a th:href="@{/accomodation}">Feature</a></li>
+                                <li><a th:href="@{/login}">Admin</a></li>
 
                             </ul>
                         </div>

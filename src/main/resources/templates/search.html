@@ -7,17 +7,22 @@
   <link rel="icon" href="image/favicon.png" type="image/png">
   <title>Royal Hotel</title>
   <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="/css/bootstrap.css">
-  <link rel="stylesheet" href="/vendors/linericon/style.css">
-  <link rel="stylesheet" href="/css/font-awesome.min.css">
-  <link rel="stylesheet" href="/vendors/bootstrap-datepicker/bootstrap-datetimepicker.min.css">
-  <link rel="stylesheet" href="/vendors/nice-select/css/nice-select.css">
-  <link rel="stylesheet" href="/vendors/owl-carousel/owl.carousel.min.css">
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="vendors/linericon/style.css">
+  <link rel="stylesheet" href="css/font-awesome.min.css">
+  <link rel="stylesheet" href="vendors/bootstrap-datepicker/bootstrap-datetimepicker.min.css">
+  <link rel="stylesheet" href="vendors/nice-select/css/nice-select.css">
+  <link rel="stylesheet" href="vendors/owl-carousel/owl.carousel.min.css">
   <!-- main css -->
-  <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
+  <style>
+    .delete-icon {
+      color: red;
+    }
+  </style>
 </head>
 <body>
 <!--================Header Area =================-->
@@ -25,7 +30,7 @@
   <div class="container">
     <nav class="navbar navbar-expand-lg navbar-light">
       <!-- Brand and toggle get grouped for better mobile display -->
-      <a class="navbar-brand logo_h" href="index.html"><img src="/image/Logo.png" alt=""></a>
+      <a class="navbar-brand logo_h" href="index.html"><img src="image/Logo.png" alt=""></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -34,12 +39,10 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
         <ul class="nav navbar-nav menu_nav ml-auto">
-
-          <li class="nav-item active"><a class="nav-link" th:href="@{/room}">Room</a></li>
-          <li class="nav-item"><a class="nav-link" th:href="@{/reservation}">Reservation</a></li>
+          <li class="nav-item"><a class="nav-link" th:href="@{/room}" >Room</a></li>
+          <li class="nav-item active"><a class="nav-link" th:href="@{/reservation}">Reservation</a></li>
           <li class="nav-item"><a class="nav-link" th:href="@{/client}">Customer</a></li>
           <li class="nav-item"><a class="nav-link" th:href="@{/logout}">Logout</a></li>
-
         </ul>
       </div>
     </nav>
@@ -48,57 +51,67 @@
 <!--================Header Area =================-->
 
 
+<div class="container" style="margin-top: 90px;">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="main_title">
 
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="editRoomModalLabel">Edit New Room</h5>
-        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form role="form" method="post" th:action="@{/room/new}" th:object="${room}">
-          <div class="mb-3">
-            <label for="roomNumber" class="form-label">Room Number</label>
-            <input type="hidden" th:field="*{roomId}">
-            <input type="text" class="form-control" id="roomNumber" name="roomNumber" th:field="*{roomNumber}" required>
-          </div>
-          <div class="mb-3">
-            <label for="floorNumber" class="form-label">Floor Number</label>
-            <input type="text" class="form-control" id="floorNumber" name="floorNumber" th:field="*{floorNumber}" required>
-          </div>
-          <div class="mb-3">
-            <label for="type" class="form-label">Type</label>
-            <select class="form-select" id="type" name="type" th:field="*{type}" required>
-              <option value="" selected>--SELECT TYPE--</option>
-              <option value="Double Deluxe Room">Double Deluxe Room</option>
-              <option value="Single Deluxe Room">Single Deluxe Room</option>
-              <option value="Honey Moon Suite">Honey Moon Suite</option>
-              <option value="Economy Double">Economy Double</option>
-            </select>
-          </div>
-          <div class="mb-3">
-            <label for="status" class="form-label">Status</label>
-            <select class="form-select" id="status" name="status" th:field="*{status}">
-              <option value="" selected>--SELECT STATUS--</option>
-              <option value="Available">Available</option>
-              <option value="Not Available">Not Available</option>
-            </select>
-          </div>
-          <div class="mb-3">
-            <label for="price" class="form-label">Price</label>
-            <input type="text" class="form-control" id="price" name="price" th:field="*{price}" required>
-          </div>
-          <div class="mb-3">
-            <label for="roomDescription" class="form-label">Description</label>
-            <input type="text" class="form-control" id="roomDescription" name="roomDescription" th:field="*{roomDescription}" required>
-          </div>
-          <button type="submit" class="btn btn-primary">Save Room</button>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addRoomModal">Enter Reservation</button>
+
+
+        <label style="color: Green;"></label>
+        <label style="color: red;"></label><br>
+        <h2>Reservation List</h2>
+        <form class="form-inline my-2 my-lg-0" action="post" th:action="@{/searchReservation}">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" name="searchText" id="searchText"  aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
+
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>Autogenerated Number</th>
+            <th>Reservation Number</th>
+            <th>Arrival Date</th>
+            <th>Departure Date</th>
+            <th>Email</th>
+            <th>Customer Names</th>
+            <th>Adult</th>
+            <th>Child</th>
+            <th>Room Id</th>
+            <th colspan="2">ACTION</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="reservation : ${reservationList}">
+            <td th:text="${reservation.resId}"></td>
+            <td th:text="${reservation.reservationId}"></td>
+            <td th:text="${reservation.arrivalDate}"></td>
+            <td th:text="${reservation.departureDate}"></td>
+            <td th:text="${reservation.email}"></td>
+            <td th:text="${reservation.names}"></td>
+            <td th:text="${reservation.adult}"></td>
+            <td th:text="${reservation.child}"></td>
+            <td th:text="${reservation.room.roomId}"></td>
+            <td>
+              <a th:href="@{/editReservation/{resId}(resId=${reservation.resId})}">
+                <i class="fas fa-edit"></i>
+              </a>
+            </td>
+            <td>
+              <a th:href="@{/deleteReservation/{resId}(resId=${reservation.resId})}" onclick="return confirm('Are you sure you want to delete this Reservation?')">
+                <i class="fas fa-trash delete-icon"></i>
+              </a>
+            </td>
+          </tr>
+          </tbody>
+
+        </table>
       </div>
     </div>
   </div>
+</div>
+
 
 <!--================ start footer Area  =================-->
 <footer class="footer-area section_gap">
@@ -152,14 +165,14 @@
         <div class="single-footer-widget instafeed">
           <h6 class="footer_title">InstaFeed</h6>
           <ul class="list_style instafeed d-flex flex-wrap">
-            <li><img src="/image/instagram/Image-01.jpg" alt=""></li>
-            <li><img src="/image/instagram/Image-02.jpg" alt=""></li>
-            <li><img src="/image/instagram/Image-03.jpg" alt=""></li>
-            <li><img src="/image/instagram/Image-04.jpg" alt=""></li>
-            <li><img src="/image/instagram/Image-05.jpg" alt=""></li>
-            <li><img src="/image/instagram/Image-06.jpg" alt=""></li>
-            <li><img src="/image/instagram/Image-07.jpg" alt=""></li>
-            <li><img src="/image/instagram/Image-08.jpg" alt=""></li>
+            <li><img src="image/instagram/Image-01.jpg" alt=""></li>
+            <li><img src="image/instagram/Image-02.jpg" alt=""></li>
+            <li><img src="image/instagram/Image-03.jpg" alt=""></li>
+            <li><img src="image/instagram/Image-04.jpg" alt=""></li>
+            <li><img src="image/instagram/Image-05.jpg" alt=""></li>
+            <li><img src="image/instagram/Image-06.jpg" alt=""></li>
+            <li><img src="image/instagram/Image-07.jpg" alt=""></li>
+            <li><img src="image/instagram/Image-08.jpg" alt=""></li>
           </ul>
         </div>
       </div>
@@ -195,5 +208,6 @@
 <script src="vendors/lightbox/simpleLightbox.min.js"></script>
 <script src="js/custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
 </body>
 </html>

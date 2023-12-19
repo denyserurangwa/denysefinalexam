@@ -1,7 +1,9 @@
 package com.hotelmanagementDenyse.hotelmanagementdenyse.controller;
 
 import com.hotelmanagementDenyse.hotelmanagementdenyse.model.Room;
+import com.hotelmanagementDenyse.hotelmanagementdenyse.model.User;
 import com.hotelmanagementDenyse.hotelmanagementdenyse.service.RoomService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
@@ -18,12 +20,21 @@ public class RoomController {
     private RoomService roomService;
 
     @GetMapping("/room")
-    public String allRoom(Model model) {
-        Room room = new Room();
-        List<Room> roomList = roomService.getRoomList();
-        model.addAttribute("room",room);
-        model.addAttribute("roomList",roomList);
-        return "room";
+    public String allRoom(Model model, HttpSession session) {
+
+        User auth=(User) session.getAttribute("adminAuthenticated");
+        if(auth != null) {
+            Room room = new Room();
+            List<Room> roomList = roomService.getRoomList();
+            model.addAttribute("room",room);
+            model.addAttribute("roomList",roomList);
+            return "room";
+        }else {
+            return "redirect:/login";
+        }
+
+
+
     }
 
     @PostMapping("/room/new")
@@ -34,16 +45,21 @@ public class RoomController {
 
 
     @GetMapping("/deleteRoom/{roomId}")
-    public String deleteRoom(@PathVariable Integer roomId, Model model) {
-        try {
-            roomService.deleteRoom(roomId);
-        } catch (DataIntegrityViolationException e) {
-            // Handle the exception when a foreign key constraint fails
-            model.addAttribute("error", "Cannot delete room with reservations. Please delete reservations first.");
-            return "errorPage"; // You can create a custom error page or redirect to another page
-        }
+    public String deleteRoom(@PathVariable Integer roomId, Model model,HttpSession session) {
+        User auth=(User) session.getAttribute("adminAuthenticated");
+        if(auth != null) {
+            try {
+                roomService.deleteRoom(roomId);
+            } catch (DataIntegrityViolationException e) {
+                // Handle the exception when a foreign key constraint fails
+                model.addAttribute("error", "Cannot delete room with reservations. Please delete reservations first.");
+                return "errorPage"; // You can create a custom error page or redirect to another page
+            }
 
-        return "redirect:/room";
+            return "redirect:/room";
+        }else {
+            return "redirect:/login";
+        }
     }
 
 

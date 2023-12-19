@@ -38,7 +38,7 @@
           <li class="nav-item"><a class="nav-link" th:href="@{/gallery}">Gallery</a></li>
           <li class="nav-item active"><a class="nav-link" th:href="@{/elements}">Elements</a></li>
           <li class="nav-item"><a class="nav-link" th:href="@{/contact}">Contact</a></li>
-          <li class="nav-item active"><a class="nav-link" th:href="@{/login}">Login</a></li>
+          <li class="nav-item"><a class="nav-link" th:href="@{/cutomerLogin}">Login</a></li>
         </ul>
       </div>
     </nav>
@@ -51,7 +51,7 @@
   <div class="overlay bg-parallax" data-stellar-ratio="0.8" data-stellar-vertical-offset="0" data-background=""></div>
   <div class="container">
     <div class="page-cover text-center">
-      <h2 class="page-cover-tittle f_48">Login</h2>
+      <h2 class="page-cover-tittle f_48">Staff Login</h2>
       <ol class="breadcrumb">
         <li><a th:href="@{/index}">Home</a></li>
         <li class="active" >Login</li>
@@ -61,7 +61,7 @@
     <div class="section-top-border">
       <div class="row">
         <div class="col-lg-8 col-md-8">
-          <h3 class="mb-30 title_color">Login</h3>
+          <h3 class="mb-30 title_color"> Login</h3>
           <form th:action="@{/loginAdmin}" method="post" >
             <div class="mt-10">
               <input type="email" name="email" placeholder="Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email'" required class="single-input">
@@ -71,7 +71,7 @@
             </div>
             <label th:if="${error}" th:text="${error}" style="color: red"></label><br>
             <button type="submit" class="button btn-success" >Login</button>
-            <p>Don't have an account?<a th:href="@{/registration}"> Register</a></p>
+<!--            <p>Don't have an account?<a th:href="@{/registration}"> Register</a></p>-->
           </form>
         </div>
       </div>
@@ -103,7 +103,7 @@
                 <li><a href="#">Home</a></li>
                 <li><a href="#">Feature</a></li>
                 <li><a href="#">Services</a></li>
-                <li><a href="#">Portfolio</a></li>
+                <li><a th:href="@{/login}">Admin</a></li>
               </ul>
             </div>
             <div class="col-4">

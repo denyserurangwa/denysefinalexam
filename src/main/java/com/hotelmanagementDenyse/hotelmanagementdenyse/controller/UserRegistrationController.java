@@ -22,15 +22,15 @@ public class UserRegistrationController {
         return new UserRegistrationDto();
     }
 
-    @GetMapping("/registration")
-    public String showRegistrationForm() {
-        return "registration";
-    }
-
-
-    @PostMapping
-    public String registerUserAccount(@ModelAttribute("user")UserRegistrationDto userRegistrationDto){
-        userService.save(userRegistrationDto);
-        return "redirect:/registration?success";
-    }
+//    @GetMapping("/registration")
+//    public String showRegistrationForm() {
+//        return "registration";
+//    }
+//
+//
+//    @PostMapping
+//    public String registerUserAccount(@ModelAttribute("user")UserRegistrationDto userRegistrationDto){
+//        userService.save(userRegistrationDto);
+//        return "redirect:/registration?success";
+//    }
 }

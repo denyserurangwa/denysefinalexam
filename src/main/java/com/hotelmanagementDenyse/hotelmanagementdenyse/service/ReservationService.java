@@ -10,4 +10,5 @@ public interface ReservationService {
     void deleteReservation(Integer resId );
     Reservation updateReservation(Reservation reservation);
     List<Reservation> getReservation();
+
 }

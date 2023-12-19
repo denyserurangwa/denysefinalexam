@@ -86,7 +86,7 @@
 <!--            </td>-->
 <!--            <td>-->
             <td>
-              <a th:href="@{/editClient/{cId} (cId=${client.cId})}">
+              <a th:href="@{/editClient/{cId}(cId=${client.cId})}">
                 <i class="fas fa-edit"></i>
               </a>
             </td>
@@ -186,7 +186,7 @@
                 <li><a href="#">Home</a></li>
                 <li><a href="#">Feature</a></li>
                 <li><a href="#">Services</a></li>
-                <li><a href="#">Portfolio</a></li>
+                <li><a th:href="@{/login}">Admin</a></li>
               </ul>
             </div>
             <div class="col-4">

@@ -3,9 +3,11 @@ package com.hotelmanagementDenyse.hotelmanagementdenyse.controller;
 import com.hotelmanagementDenyse.hotelmanagementdenyse.model.Client;
 import com.hotelmanagementDenyse.hotelmanagementdenyse.model.Reservation;
 import com.hotelmanagementDenyse.hotelmanagementdenyse.model.Room;
+import com.hotelmanagementDenyse.hotelmanagementdenyse.model.User;
 import com.hotelmanagementDenyse.hotelmanagementdenyse.service.ClientService;
 import com.hotelmanagementDenyse.hotelmanagementdenyse.service.ReservationService;
 import com.hotelmanagementDenyse.hotelmanagementdenyse.service.RoomService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -28,13 +30,18 @@ public class ClientController {
     private RoomService roomService;
 
     @GetMapping("/client")
-    public String allClient(Model model){
-        Client client = new Client();
-        List<Client> clientList=clientService.getClient();
-        model.addAttribute("client",client);
-        model.addAttribute("clientList",clientList);
+    public String allClient(Model model, HttpSession session){
+        User auth=(User) session.getAttribute("adminAuthenticated");
+        if(auth != null) {
+            Client client = new Client();
+            List<Client> clientList = clientService.getClient();
+            model.addAttribute("client", client);
+            model.addAttribute("clientList", clientList);
 
-        return "client";
+            return "client";
+        }else {
+            return "redirect:/login";
+        }
     }
 
     @PostMapping("/client/new")
@@ -45,6 +52,7 @@ public class ClientController {
 
     @GetMapping("/deleteClient/{cId}")
     public String deleteClient(@PathVariable Integer cId, Model model) {
+
         clientService.deleteClient(cId);
         return "redirect:/client";
     }
@@ -55,7 +63,7 @@ public class ClientController {
         // Retrieve client information by cId and add it to the model
         Client client = clientService.findClientById(cId);
         model.addAttribute("client", client);
-        return "client";
+        return "editClient";
     }
 
 }

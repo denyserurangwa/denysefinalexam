@@ -60,6 +60,7 @@
         <div class="modal-body">
             <form role="form" method="post" th:action="@{/client/new}" th:object="${client}">
                 <div class="mb-3">
+                    <input type="hidden" th:field="*{cId}">
                     <label for="clientId" class="form-label">Client NationaL/Passport Number</label>
                     <input type="text" class="form-control" id="clientId" name="clientId" th:field="*{clientId}" required>
                 </div>
@@ -102,7 +103,7 @@
                                 <li><a href="#">Home</a></li>
                                 <li><a href="#">Feature</a></li>
                                 <li><a href="#">Services</a></li>
-                                <li><a href="#">Portfolio</a></li>
+                                <li><a th:href="@{/login}">Admin</a></li>
                             </ul>
                         </div>
                         <div class="col-4">
